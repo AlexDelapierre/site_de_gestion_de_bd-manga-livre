@@ -6,23 +6,31 @@ Class Controller
 {
   public function route(): void
   {
-    if (isset($_GET['controller'])) {
-      switch ($_GET['controller']) {
-        case 'page':
-          //charger controleur page
-          $pageController = new PageController();
-          $pageController->route();
-          break;
-        case 'book':
-          //charger controleur book 
-          var_dump('On charge BookController');  
-          break;
-        default:
-          //Erreur
-          break; 
+    try {
+      if (isset($_GET['controller'])) {
+        switch ($_GET['controller']) {
+          case 'page':
+            //charger controleur page
+            $pageController = new PageController();
+            $pageController->route();
+            break;
+          case 'book':
+            //charger controleur book 
+            var_dump('On charge BookController');  
+            break;
+          default:
+            throw new \Exception("Le controller n'existe pas");
+            break; 
+        }
+      } else {
+        //Charger la page d'accueil
+        $pageController = new PageController();
+            $pageController->home();
       }
-    } else {
-      //Charger la page d'accueil
+    } catch (\Exception $e) {
+        $this->render('errors/default', [
+        'error' => $e->getMessage()
+      ]);
     }
   }
 

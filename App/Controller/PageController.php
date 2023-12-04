@@ -14,7 +14,7 @@ Class PageController extends Controller
           break;
         case 'home':
           //Appeler la méthode home() 
-          var_dump('On appel la méthode home');  
+          $this->home();  
           break;
         default:
           //Erreur
@@ -27,15 +27,16 @@ Class PageController extends Controller
 
   protected function about()
   {
-    // On peut passer directement le tableau dans les paramètres de render() sans passer par une variable intermédiaire.
-    // $params = [
-    //   'test' => 'abc',
-    //   'test2' => 'abc2'
-    // ];
-
+    /* on passe en premier paramètre la page à charger et en 2ème un tableau associétif de paramètres*/
     $this->render('page/about', [
       'test' => 'abc',
       'test2' => 'abc2'
+    ]);
+  
+  }
+  protected function home()
+  {
+    $this->render('page/home', [
     ]);
   }
 }
