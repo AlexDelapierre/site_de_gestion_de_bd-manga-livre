@@ -1,7 +1,12 @@
 <?php
-  require_once 'templates/header.php';
+  
+  define('_ROOTPATH_', __DIR__);
 
-  require_once 'templates/home.php';
+  spl_autoload_register();
 
-  require_once 'templates/footer.php';
+  use App\Controller\Controller;
+
+  $controller = new Controller();
+  $controller->route();
+
 ?>
