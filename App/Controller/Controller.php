@@ -23,7 +23,7 @@ Class Controller
             break; 
         }
       } else {
-        //Charger la page d'accueil
+        //Charger la page d'accueil si pas de controller dans l'url  
         $pageController = new PageController();
             $pageController->home();
       }
@@ -47,7 +47,9 @@ Class Controller
         require_once $filepath;
       }
     } catch(\Exception $e) {
-      echo $e->getMessage();
+      $this->render('errors/default', [
+        'error' => $e->getMessage()
+      ]);
     }
   }
 }
