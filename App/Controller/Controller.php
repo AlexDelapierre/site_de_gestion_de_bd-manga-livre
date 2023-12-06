@@ -16,7 +16,8 @@ Class Controller
             break;
           case 'book':
             //charger controleur book 
-            var_dump('On charge BookController');  
+            $pageController = new BookController();
+            $pageController->route();  
             break;
           default:
             throw new \Exception("Le controller n'existe pas");
