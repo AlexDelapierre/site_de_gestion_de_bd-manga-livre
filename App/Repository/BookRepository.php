@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Book;
 use App\Db\Mysql;
+use App\Tools\StringTools;
 
 class BookRepository
 {
@@ -11,17 +12,19 @@ class BookRepository
   {
     // Appel bdd
     $mysql = Mysql::getInstance();
-    var_dump($mysql);
-    $book = ['id' => 1, 'title' => 'titre test', 'description' => 'description test'];
-
-    $bookEntity = new Book();
-    $bookEntity->setId($book['id']); 
-    $bookEntity->setTitle($book['title']); 
-    $bookEntity->setDescription($book['description']);
     
-    // foreach ($book as $key => $value) {
-    //   $bookEntity->{'set'}($value);
-    // }
+    $pdo = $mysql->getPDO();
+
+    $query = $pdo->prepare('SELECT * FROM Book WHERE id = :id');
+    $query->bindValue(':id', $id, $pdo::PARAM_INT);
+    $query->execute();
+    $book = $query->fetch($pdo::FETCH_ASSOC); //FETCH_ASSOC pour renvoyer un tableau associatif avec uniquement les valeurs dont j'ai besoin.
+  
+    $bookEntity = new Book();
+
+    foreach ($book as $key => $value) {
+      $bookEntity->{'set'.StringTools::toPascalCase($key)}($value);
+    }
 
     return $bookEntity; 
   }

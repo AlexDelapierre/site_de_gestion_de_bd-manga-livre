@@ -12,6 +12,7 @@ class Mysql
   private $pdo;
   private static $_instance = null;
 
+  // Singleton pattern design
   private function __construct()
   {
     $conf = require_once _ROOTPATH_.'/config.php';
@@ -34,11 +35,21 @@ class Mysql
 
   }
 
-  public static function getInstance()
+  public static function getInstance():self
   {
     if (is_null(self::$_instance)) {
       self::$_instance = new mysql();
     }
     return self::$_instance;
+  }
+
+  public function getPDO() 
+  {
+    if (is_null($this->pdo)) {
+      //$this->pdo = new \PDO('mysql:dbname=' . $this->db_name . ';charset=utf8;host=' . $this->db_host.':'.$this->db_port, $this->db_user, $this->db_password);
+      // $this->pdo = new \PDO('mysql:dbname=' . $this->db_name . ';host=' . $this->db_host . ';charset=utf8mb4', $this->db_user, $this->db_password);
+      $this->pdo = new \PDO('mysql:dbname=bd/manga/livre;host=localhost;charset=utf8mb4', 'root', '');
+    }
+    return $this->pdo;
   }
 }
