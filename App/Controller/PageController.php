@@ -32,15 +32,24 @@ Class PageController extends Controller
     }
   }
 
+  /*
+    Exemple d'appel depuis l'url
+    index.php?controller=page&action=about
+  */
   protected function about()
   {
-    /* on passe en premier paramètre la page à charger et en 2ème un tableau associétif de paramètres*/
+    /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
     $this->render('page/about', [
       'test' => 'abc',
       'test2' => 'abc2'
     ]);
   
   }
+
+  /*
+    Exemple d'appel depuis l'url
+    index.php?controller=page&action=home
+  */
   protected function home()
   {
     $this->render('page/home', [

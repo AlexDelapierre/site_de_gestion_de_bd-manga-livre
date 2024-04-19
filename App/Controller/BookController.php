@@ -41,6 +41,10 @@ Class BookController extends Controller
     }
   }
 
+  /*
+    Exemple d'appel depuis l'url
+    index.php?controller=book&action=show&id=1
+  */
   protected function show()
   {
     try {
