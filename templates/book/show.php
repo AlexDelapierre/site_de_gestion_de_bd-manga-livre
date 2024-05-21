@@ -1,9 +1,6 @@
-<?php require_once 'templates/header.php'; 
-  // Pour indiquer à PHP que la variable $book est de type Entity. 
-  /* @var $book \App\Entity\Book */
-?>
+[header]
 
-<h1><?=$book->getTitle(); ?></h1>
-<p><?=$book->getDescription(); ?></p>
+<h1>[title]</h1>
+<p>[description]</p>
 
-<?php require_once 'templates/footer.php'; ?>
+[footer]
