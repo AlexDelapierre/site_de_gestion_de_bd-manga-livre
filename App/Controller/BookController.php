@@ -57,7 +57,8 @@ Class BookController extends Controller
 
         $this->render('book/show', [
           'title' => $book->getTitle(),
-          'description' => $book->getDescription()
+          'description' => $book->getDescription(),
+          'image' => $book->getImage()
         ]);
       } else {
         throw new \Exception("L'id est manquant en paramètres");
