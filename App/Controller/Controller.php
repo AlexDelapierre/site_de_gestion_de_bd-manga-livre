@@ -12,21 +12,19 @@ Class Controller
           case 'page':
             //charger controleur page
             $pageController = new PageController();
-            $pageController->route();
             break;
           case 'book':
             //charger controleur book 
             $pageController = new BookController();
-            $pageController->route();  
             break;
           default:
             throw new \Exception("Le controller n'existe pas");
-            break; 
         }
+        $pageController->route(); 
       } else {
         //Charger la page d'accueil si pas de controller dans l'url  
         $pageController = new PageController();
-            $pageController->home();
+        $pageController->home();
       }
     } catch (\Exception $e) {
         $this->render('errors/default', [
@@ -37,20 +35,17 @@ Class Controller
 
   protected function render(string $path, array $params = []):void
   {
-    $filepath = _ROOTPATH_.'/templates/'.$path.'.php ';
-
-    try {
-      if(!file_exists($filepath)) {
-        throw new \Exception("Fichier non trouvé : ".$filepath);
-      } else {
-        // Extrait chaque ligne du tableau et créer des variables pour chacunes
-        extract($params);
-        require_once $filepath;
+    $filepath = "templates/$path.php";
+    if(!file_exists($filepath)) {
+      render('template/errors/default.php', ['error' => "le fichier $filepath n'existe pas"]);
+    }else{
+      $params["header"] = file_get_contents("templates/header.php");
+      $params["footer"] = file_get_contents("templates/footer.php");
+      $code_html = file_get_contents($filepath);
+      foreach($params as $key => $value) {
+        $code_html = str_replace("[$key]", $value, $code_html);
       }
-    } catch(\Exception $e) {
-      $this->render('errors/default', [
-        'error' => $e->getMessage()
-      ]);
+      print($code_html);
     }
   }
 }

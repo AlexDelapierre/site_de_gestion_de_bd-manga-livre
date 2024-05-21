@@ -70,7 +70,6 @@ Class BookController extends Controller
   
   protected function home()
   {
-    $this->render('page/home', [
-    ]);
+    $this->render('page/home', []);
   }
 }

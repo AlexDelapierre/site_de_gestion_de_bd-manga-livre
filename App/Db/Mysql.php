@@ -15,7 +15,7 @@ class Mysql
   // Singleton pattern design
   private function __construct()
   {
-    $conf = require_once _ROOTPATH_.'/config.php';
+    $conf = require_once 'config.php';
 
     if (isset($conf['db_name'])) {
       $this->db_name = $conf['db_name'];

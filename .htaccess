@@ -1,3 +1,3 @@
 RewriteEngine On
 
-RewriteRule ^about$ index.php?controller=page&action=about
+RewriteRule ^about$ /?controller=page&action=about
