@@ -15,7 +15,7 @@ class BookRepository
     
     $pdo = $mysql->getPDO();
 
-    $query = $pdo->prepare('SELECT * FROM Book WHERE id = :id');
+    $query = $pdo->prepare('SELECT * FROM book WHERE id = :id');
     $query->bindValue(':id', $id, $pdo::PARAM_INT);
     $query->execute();
     $book = $query->fetch($pdo::FETCH_ASSOC); //FETCH_ASSOC pour renvoyer un tableau associatif avec uniquement les valeurs dont j'ai besoin.

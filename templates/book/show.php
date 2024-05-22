@@ -1,9 +1,7 @@
-<?php require_once _ROOTPATH_.'/templates/header.php'; 
-  // Pour indiquer à PHP que la variable $book est de type Entity. 
-  /* @var $book \App\Entity\Book */
-?>
+[header]
 
-<h1><?=$book->getTitle(); ?></h1>
-<p><?=$book->getDescription(); ?></p>
+<img src="upload/books/[image]" style="float:right;margin-left:1em;" width="200px">
+<h1>[title]</h1>
+<p>[description]</p>
 
-<?php require_once _ROOTPATH_.'/templates/footer.php'; ?>
+[footer]

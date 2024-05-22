@@ -15,24 +15,13 @@ class Mysql
   // Singleton pattern design
   private function __construct()
   {
-    $conf = require_once _ROOTPATH_.'/config.php';
+    include_once('config.php');
 
-    if (isset($conf['db_name'])) {
-      $this->db_name = $conf['db_name'];
+    if (isset($config)) {
+      $this->db_connect = $config["db_connect"];
+      $this->db_user = $config["db_user"];
+      $this->db_password = $config["db_password"];
     }
-    if (isset($conf['$db_user'])) {
-      $this->db_user = $conf['db_user'];
-    }
-    if (isset($conf['db_password'])) {
-      $this->db_password = $conf['db_password'];
-    }
-    if (isset($conf['db_port'])) {
-      $this->db_port = $conf['db_port'];
-    }
-    if (isset($conf['db_host'])) {
-      $this->db_host = $conf['db_host'];
-    }
-
   }
 
   public static function getInstance():self
@@ -46,9 +35,7 @@ class Mysql
   public function getPDO() 
   {
     if (is_null($this->pdo)) {
-      //$this->pdo = new \PDO('mysql:dbname=' . $this->db_name . ';charset=utf8;host=' . $this->db_host.':'.$this->db_port, $this->db_user, $this->db_password);
-      // $this->pdo = new \PDO('mysql:dbname=' . $this->db_name . ';host=' . $this->db_host . ';charset=utf8mb4', $this->db_user, $this->db_password);
-      $this->pdo = new \PDO('mysql:dbname=bd/manga/livre;host=localhost;charset=utf8mb4', 'root', '');
+      $this->pdo = new \PDO($this->db_connect, $this->db_user, $this->db_password);
     }
     return $this->pdo;
   }

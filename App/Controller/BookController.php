@@ -56,7 +56,9 @@ Class BookController extends Controller
         $book = $bookRepository->findOneById($id); 
 
         $this->render('book/show', [
-          'book' => $book
+          'title' => $book->getTitle(),
+          'description' => $book->getDescription(),
+          'image' => $book->getImage()
         ]);
       } else {
         throw new \Exception("L'id est manquant en paramètres");
@@ -70,7 +72,6 @@ Class BookController extends Controller
   
   protected function home()
   {
-    $this->render('page/home', [
-    ]);
+    $this->render('page/home', []);
   }
 }

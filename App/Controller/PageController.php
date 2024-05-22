@@ -19,7 +19,8 @@ Class PageController extends Controller
             $this->home();  
             break;
           default:
-            throw new \Exception("Cette action n'existe pas :".$_GET['action']);
+            http_response_code(404);
+            throw new \Exception("<h2>Erreur 404</h2>Cette page n'existe pas (action <strong>$_GET[action]</strong>)");
             break; 
         }
       } else {
@@ -52,7 +53,6 @@ Class PageController extends Controller
   */
   protected function home()
   {
-    $this->render('page/home', [
-    ]);
+    $this->render('page/home');
   }
 }
