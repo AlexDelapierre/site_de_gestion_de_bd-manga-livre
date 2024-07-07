@@ -7,7 +7,6 @@ Class PageController extends Controller
   public function route(): void
   {
     try {
-      //code...
       if (isset($_GET['action'])) {
         switch ($_GET['action']) {
           case 'about':

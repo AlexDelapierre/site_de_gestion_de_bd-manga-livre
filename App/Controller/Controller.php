@@ -37,7 +37,7 @@ Class Controller
   {
     $filepath = "templates/$path.php";
     if(!file_exists($filepath)) {
-      render('template/errors/default.php', ['error' => "le fichier $filepath n'existe pas"]);
+      $this->render('template/errors/default.php', ['error' => "le fichier $filepath n'existe pas"]);
     }else{
       $params["header"] = file_get_contents("templates/header.php");
       $params["footer"] = file_get_contents("templates/footer.php");

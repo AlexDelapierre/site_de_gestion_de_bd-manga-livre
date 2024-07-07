@@ -11,8 +11,7 @@ class BookRepository
   public function findOneById(int $id)
   {
     // Appel bdd
-    $mysql = Mysql::getInstance();
-    
+    $mysql = Mysql::getInstance();    
     $pdo = $mysql->getPDO();
 
     $query = $pdo->prepare('SELECT * FROM book WHERE id = :id');
@@ -22,6 +21,7 @@ class BookRepository
   
     $bookEntity = new Book();
 
+    // On passe les valeurs avec les setteurs en passant par une boucle foreach 
     foreach ($book as $key => $value) {
       $bookEntity->{'set'.StringTools::toPascalCase($key)}($value);
     }

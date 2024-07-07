@@ -4,18 +4,17 @@ namespace App\Db;
 
 class Mysql
 {
-  private $db_name; 
+  private $db_connect;
   private $db_user; 
   private $db_password; 
-  private $db_port; 
-  private $db_host; 
-  private $pdo;
+  private $pdo = null;
   private static $_instance = null;
 
   // Singleton pattern design
   private function __construct()
   {
-    include_once('config.php');
+    // $config = require_once _ROOTPATH_.'/config.php';
+    $config = include_once('config.php');
 
     if (isset($config)) {
       $this->db_connect = $config["db_connect"];
