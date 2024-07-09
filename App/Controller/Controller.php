@@ -35,17 +35,38 @@ Class Controller
 
   protected function render(string $path, array $params = []):void
   {
-    $filepath = "templates/$path.php";
-    if(!file_exists($filepath)) {
-      $this->render('template/errors/default.php', ['error' => "le fichier $filepath n'existe pas"]);
-    }else{
-      $params["header"] = file_get_contents("templates/header.php");
-      $params["footer"] = file_get_contents("templates/footer.php");
-      $code_html = file_get_contents($filepath);
-      foreach($params as $key => $value) {
-        $code_html = str_replace("[$key]", $value, $code_html);
+    $filePath = "templates/$path.php";
+
+      try {
+          if (!file_exists($filePath)) {
+              throw new \Exception("Fichier non trouvé : ".$filePath);
+          } else {
+              // Extrait chaque ligne du tableau et crée des variables pour chacune
+              extract($params);
+              require_once $filePath;
+          }
+      } catch(\Exception $e) {
+          $this->render('errors/default', [
+              'error' => $e->getMessage()
+          ]);
       }
-      print($code_html);
-    }
+
   }
+
+  // protected function render(string $path, array $params = []):void
+  // {
+  //   $filepath = "templates/$path.php";
+  //   if(!file_exists($filepath)) {
+  //     $this->render('template/errors/default.php', ['error' => "le fichier $filepath n'existe pas"]);
+  //   }else{
+  //     $params["header"] = file_get_contents("templates/header.php");
+  //     $params["footer"] = file_get_contents("templates/footer.php");
+  //     $code_html = file_get_contents($filepath);
+  //     foreach($params as $key => $value) {
+  //       // Dans le code html du template $path, on remplace "[$key]" par le code html de la clé du tableau $params. 
+  //       $code_html = str_replace("[$key]", $value, $code_html);
+  //     }
+  //     print($code_html);
+  //   }
+  // }
 }

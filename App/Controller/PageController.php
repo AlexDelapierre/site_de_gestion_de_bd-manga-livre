@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\BookRepository;
+
 Class PageController extends Controller
 {
   public function route(): void
@@ -34,6 +36,24 @@ Class PageController extends Controller
 
   /*
     Exemple d'appel depuis l'url
+    index.php?controller=page&action=home
+  */
+  protected function home()
+  {
+    $bookRepository = new BookRepository;
+    $books = $bookRepository->getBooks(3,5);
+    
+    echo '<pre>';
+        var_dump($books);
+    echo '</pre>';
+    
+    $this->render('page/home', [
+      'books' => $books
+    ]);
+  }
+
+  /*
+    Exemple d'appel depuis l'url
     index.php?controller=page&action=about
   */
   protected function about()
@@ -44,14 +64,5 @@ Class PageController extends Controller
       'test2' => 'abc2'
     ]);
   
-  }
-
-  /*
-    Exemple d'appel depuis l'url
-    index.php?controller=page&action=home
-  */
-  protected function home()
-  {
-    $this->render('page/home');
-  }
+  } 
 }
