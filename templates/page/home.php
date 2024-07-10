@@ -1,6 +1,6 @@
 <!-- [header] -->
 <?php
-  require_once('templates/header.php');
+  require_once('templates/_partials/_header.php');
 ?>
 
 <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
@@ -22,23 +22,13 @@
 
 <div class="row text-center">
 
-  <?php foreach ($books as $key => $value) {?>
-
-  <div class="col-md-4 my-2 d-flex">
-    <div class="card">
-      <img src="uploads/books/<?php echo $books[$key]['image']; ?>" class="card-img-top" alt="...">
-      <div class="card-body">
-        <a href="./?controller=book&id=1&action=show" class="btn btn-primary">Détails</a>
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <?php } ?>
+  <?php foreach ($books as $key => $value) {
+    include('templates/_partials/book_partial.php');
+  } ?>
 
 </div>
 
 <?php
-require_once('templates/footer.php');
+require_once('templates/_partials/_footer.php');
 ?>
 <!-- [footer] -->
