@@ -42,9 +42,11 @@ Class PageController extends Controller
   {
     $bookRepository = new BookRepository;
     $books = $bookRepository->getBooks(3,5);
+    $totalBooks = $bookRepository->getTotalBooks();
+    $bookPaginated = $bookRepository->findBooksPaginated(2);
     
     echo '<pre>';
-        var_dump($books);
+        var_dump($totalBooks);
     echo '</pre>';
     
     $this->render('page/home', [
