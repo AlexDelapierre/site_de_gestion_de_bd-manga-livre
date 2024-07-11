@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\BookRepository;
+use App\Service\BookPaginationService;
 
 Class PageController extends Controller
 {
@@ -41,14 +42,21 @@ Class PageController extends Controller
   protected function home()
   {
     $bookRepository = new BookRepository;
-    $books = $bookRepository->getBooks(3,5);
-    $totalBooks = $bookRepository->getTotalBooks();
-    $bookPaginated = $bookRepository->findBooksPaginated(2);
-    
+    $bookPaginationService = new BookPaginationService($bookRepository);
+
+    //On va chercher le numéro de page dans l'url
+    if (isset($_GET['page'])) {
+      $page = $_GET['page'];
+    } else {
+      $page = 1;
+    }
+
+    $books = $bookPaginationService->findBooksPaginated($page, 6);
+
     echo '<pre>';
-        var_dump($totalBooks);
+        var_dump($books);
     echo '</pre>';
-    
+        
     $this->render('page/home', [
       'books' => $books
     ]);
