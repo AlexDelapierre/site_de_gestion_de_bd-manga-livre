@@ -12,9 +12,16 @@ class BookPaginationService {
         $this->bookRepository = $bookRepository;
     }
 
-    function findBooksPaginated(int $page, int $limit = 6): array {
+    function findBooksPaginated(int $limit = 6): array {
         // Pour avoir toujours une $limit positive
         $limit = abs($limit);
+
+        //On va chercher le numéro de page dans l'url
+        if (isset($_GET['page'])) {
+            $page = $_GET['page'];
+        } else {
+            $page = 1;
+        }
     
         // Calculer l'offset pour la pagination
         $offset = ($page * $limit) - $limit;
@@ -41,13 +48,15 @@ class BookPaginationService {
             $result['pages'] = $pages;
             $result['page'] = $page;
             $result['limit'] = $limit;
-            
-        } catch (PDOException $e) {
-            // Gérer les erreurs de la base de données
-            error_log($e->getMessage());
-            // Vous pouvez également lever une exception personnalisée ici
-        }
-    
-        return $result;
-    }
+            $result['path'] = 'index.php?controller=page&action=home';
+
+
+} catch (PDOException $e) {
+// Gérer les erreurs de la base de données
+error_log($e->getMessage());
+// Vous pouvez également lever une exception personnalisée ici
+}
+
+return $result;
+}
 }

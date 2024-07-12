@@ -43,19 +43,11 @@ Class PageController extends Controller
   {
     $bookRepository = new BookRepository;
     $bookPaginationService = new BookPaginationService($bookRepository);
+    $books = $bookPaginationService->findBooksPaginated(6);
 
-    //On va chercher le numéro de page dans l'url
-    if (isset($_GET['page'])) {
-      $page = $_GET['page'];
-    } else {
-      $page = 1;
-    }
-
-    $books = $bookPaginationService->findBooksPaginated($page, 6);
-
-    echo '<pre>';
-        var_dump($books);
-    echo '</pre>';
+    // echo '<pre>';
+    //     var_dump($books);
+    // echo '</pre>';
         
     $this->render('page/home', [
       'books' => $books
