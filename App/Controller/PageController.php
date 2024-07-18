@@ -13,12 +13,19 @@ Class PageController extends Controller
       if (isset($_GET['action'])) {
         switch ($_GET['action']) {
           case 'about':
-            //Appeler la méthode about()
             $this->about();
             break;
           case 'home':
-            //Appeler la méthode home() 
             $this->home();  
+            break;
+          case 'books':
+            $this->books();  
+            break;
+          case 'bd':
+            $this->bd();  
+            break;
+          case 'manga':
+            $this->manga();  
             break;
           default:
             http_response_code(404);
@@ -41,6 +48,7 @@ Class PageController extends Controller
   */
   protected function home()
   {
+    $template = 'home.php'; 
     $bookRepository = new BookRepository;
     $bookPaginationService = new BookPaginationService($bookRepository);
     $books = $bookPaginationService->findBooksPaginated(6);
@@ -49,7 +57,8 @@ Class PageController extends Controller
     //     var_dump($books);
     // echo '</pre>';
         
-    $this->render('page/home', [
+    $this->render('page/base', [
+      'template' => $template,
       'books' => $books
     ]);
   }
@@ -60,10 +69,53 @@ Class PageController extends Controller
   */
   protected function about()
   {
+    $template = 'about.php'; 
+
     /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
-    $this->render('page/about', [
-      'test' => 'abc',
-      'test2' => 'abc2'
+    $this->render('page/base', [
+      'template' => $template,
+    ]);
+  
+  } 
+  /*
+    Exemple d'appel depuis l'url
+    index.php?controller=page&action=books
+  */
+  protected function books()
+  {
+    $template = 'books.php'; 
+    
+    /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
+    $this->render('page/base', [
+      'template' => $template,
+    ]);
+  
+  } 
+  /*
+    Exemple d'appel depuis l'url
+    index.php?controller=page&action=bd
+  */
+  protected function bd()
+  {
+    $template = 'bd.php'; 
+    
+    /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
+    $this->render('page/base', [
+      'template' => $template,
+    ]);
+  
+  } 
+  /*
+    Exemple d'appel depuis l'url
+    index.php?controller=page&action=about
+  */
+  protected function manga()
+  {
+    $template = 'manga.php';
+     
+    /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
+    $this->render('page/base', [
+      'template' => $template,
     ]);
   
   } 
