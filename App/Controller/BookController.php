@@ -11,11 +11,11 @@ Class BookController extends Controller
     try {
       if (isset($_GET['action'])) {
         switch ($_GET['action']) {
+          case 'list':
+            // Appeler méthode index() 
+            break;
           case 'show':
             $this->show();
-            break;
-          case 'list':
-            // Appeler méthode list() 
             break;
           case 'edit':
             // Appeler méthode edit() 
@@ -39,6 +39,9 @@ Class BookController extends Controller
       ]);
     }
   }
+
+  
+ 
 
   /*
     Exemple d'appel depuis l'url

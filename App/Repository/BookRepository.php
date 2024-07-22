@@ -18,6 +18,18 @@ class BookRepository
     $this->pdo = $this->mysql->getPDO(); 
   }
 
+  public function findAll(): array
+  {
+    $query = "
+        SELECT b.*, t.*
+        FROM book b
+        JOIN type t ON b.type_id = t.id
+    ";
+    $stmt = $this->pdo->prepare($query);
+    $stmt->execute();
+    return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
+  }
+
   public function getBooks(int $limit, int $offset): array 
   {
     $query = "

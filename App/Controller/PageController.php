@@ -18,8 +18,8 @@ Class PageController extends Controller
           case 'home':
             $this->home();  
             break;
-          case 'books':
-            $this->books();  
+          case 'livres':
+            $this->books();
             break;
           case 'bd':
             $this->bd();  
@@ -48,7 +48,7 @@ Class PageController extends Controller
   */
   protected function home()
   {
-    $template = 'home.php'; 
+    $template = 'page/home.php'; 
     $bookRepository = new BookRepository;
     $bookPaginationService = new BookPaginationService($bookRepository);
     $books = $bookPaginationService->findBooksPaginated(6);
@@ -57,7 +57,7 @@ Class PageController extends Controller
     //     var_dump($books);
     // echo '</pre>';
         
-    $this->render('page/base', [
+    $this->render('base', [
       'template' => $template,
       'books' => $books
     ]);
@@ -69,38 +69,46 @@ Class PageController extends Controller
   */
   protected function about()
   {
-    $template = 'about.php'; 
+    $template = 'page/about.php'; 
 
     /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
-    $this->render('page/base', [
+    $this->render('base', [
       'template' => $template,
     ]);
   
   } 
+
   /*
-    Exemple d'appel depuis l'url
-    index.php?controller=page&action=books
+  Exemple d'appel depuis l'url
+  index.php?controller=page&action=books
   */
   protected function books()
   {
-    $template = 'books.php'; 
+    $template = 'page/books.php'; 
+    $bookRepository = new BookRepository;
+    $books = $bookRepository->findAll();
+
+    // echo '<pre>';
+    //   var_dump($books);
+    // echo '</pre>';
     
     /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
-    $this->render('page/base', [
+    $this->render('base', [
       'template' => $template,
+      'books' => $books
     ]);
+  }   
   
-  } 
   /*
     Exemple d'appel depuis l'url
     index.php?controller=page&action=bd
   */
   protected function bd()
   {
-    $template = 'bd.php'; 
+    $template = 'page/bd.php'; 
     
     /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
-    $this->render('page/base', [
+    $this->render('base', [
       'template' => $template,
     ]);
   
@@ -111,10 +119,10 @@ Class PageController extends Controller
   */
   protected function manga()
   {
-    $template = 'manga.php';
+    $template = 'page/manga.php';
      
     /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
-    $this->render('page/base', [
+    $this->render('base', [
       'template' => $template,
     ]);
   
