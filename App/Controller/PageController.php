@@ -80,18 +80,18 @@ Class PageController extends Controller
 
   /*
   Exemple d'appel depuis l'url
-  index.php?controller=page&action=books
+  index.php?controller=page&action=livres
   */
   protected function books()
   {
     $template = 'page/books.php'; 
     $bookRepository = new BookRepository;
-    $books = $bookRepository->findAll();
+    $books = $bookRepository->getBooksByType();
 
     // echo '<pre>';
-    //   var_dump($books);
+    // var_dump($books);
     // echo '</pre>';
-    
+
     /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
     $this->render('base', [
       'template' => $template,

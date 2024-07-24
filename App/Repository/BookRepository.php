@@ -30,6 +30,21 @@ class BookRepository
     return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
   }
 
+  public function getBooksByType(): array
+  {
+    $query = "
+        SELECT *
+        FROM book 
+        JOIN type ON book.type_id = type.id 
+        JOIN author ON author_id = author.id
+        WHERE type.parent_id = 1
+        ";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
+  }
+
+  // Requête pour la pagination
   public function getBooks(int $limit, int $offset): array 
   {
     $query = "
@@ -45,6 +60,7 @@ class BookRepository
     return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
 }
 
+// Requête pour la pagination
  public function getTotalBooks(): int 
  {
      $query = "
