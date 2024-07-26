@@ -22,10 +22,10 @@ Class PageController extends Controller
             $this->books();
             break;
           case 'bd':
-            $this->bd();  
+            $this->books();  
             break;
           case 'manga':
-            $this->manga();  
+            $this->books();  
             break;
           default:
             http_response_code(404);
@@ -81,12 +81,14 @@ Class PageController extends Controller
   /*
   Exemple d'appel depuis l'url
   index.php?controller=page&action=livres
+  index.php?controller=page&action=bd
+  index.php?controller=page&action=manga
   */
   protected function books()
   {
     $template = 'page/books.php'; 
     $bookRepository = new BookRepository;
-    $books = $bookRepository->getBooksByType();
+    $books = $bookRepository->getBooksByParentType();
 
     // echo '<pre>';
     // var_dump($books);
@@ -98,33 +100,4 @@ Class PageController extends Controller
       'books' => $books
     ]);
   }   
-  
-  /*
-    Exemple d'appel depuis l'url
-    index.php?controller=page&action=bd
-  */
-  protected function bd()
-  {
-    $template = 'page/bd.php'; 
-    
-    /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
-    $this->render('base', [
-      'template' => $template,
-    ]);
-  
-  } 
-  /*
-    Exemple d'appel depuis l'url
-    index.php?controller=page&action=about
-  */
-  protected function manga()
-  {
-    $template = 'page/manga.php';
-     
-    /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
-    $this->render('base', [
-      'template' => $template,
-    ]);
-  
-  } 
 }

@@ -6,13 +6,20 @@ use App\Repository\BookRepository;
 
 Class BookController extends Controller
 {
+  private $bookRepository;
+
+  public function __construct()
+  { 
+    $this->bookRepository = new BookRepository;
+  }
+
   public function route(): void
   {
     try {
       if (isset($_GET['action'])) {
         switch ($_GET['action']) {
           case 'list':
-            // Appeler méthode index() 
+            $this->index();
             break;
           case 'show':
             $this->show();
@@ -40,8 +47,23 @@ Class BookController extends Controller
     }
   }
 
-  
- 
+  protected function index()
+  {
+    $template = 'book/index.php'; 
+    if (isset($_GET['categorie'])) {
+      $categorie = htmlspecialchars($_GET['categorie']); // Récupère et échappe la variable pour éviter les injections XSS
+    } else {
+        // Gérer le cas où la variable n'est pas définie
+        $categorie = 'default'; // ou toute autre valeur par défaut
+    }
+
+    $books = $this->bookRepository->getBooksByType($categorie);
+
+    $this->render('base', [
+      'template' => $template,
+      'books' => $books
+    ]);
+  }
 
   /*
     Exemple d'appel depuis l'url
@@ -54,8 +76,8 @@ Class BookController extends Controller
 
         $id = (int)$_GET['id'];
         // Charger le livre par un appel au repository
-        $bookRepository = new BookRepository;
-        $book = $bookRepository->findOneById($id); 
+        // $bookRepository = new BookRepository;
+        $book = $this->bookRepository->findOneById($id); 
 
         $this->render('book/show', [
           'title' => $book->getTitle(),

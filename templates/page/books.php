@@ -15,7 +15,9 @@
 foreach ($categories as $categorie) {?>
 
   <div class="container text-center my-3">
-    <h2 class="font-weight-light"><?php echo $categorie ?> </h2>
+  <a href="index.php?controller=book&action=list&categorie=<?php echo urlencode($categorie); ?>">
+    <h2 class="font-weight-light"><?php echo htmlspecialchars($categorie); ?> </h2>
+  </a>
     <div class="row mx-auto my-auto">
       <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
         <div class="carousel-inner w-100" role="listbox">

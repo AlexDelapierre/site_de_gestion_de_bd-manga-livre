@@ -30,16 +30,49 @@ class BookRepository
     return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
   }
 
-  public function getBooksByType(): array
+  public function getBooksByParentType(): array
+  {
+    $parentCategorie = $_GET['action'];
+
+    switch ($parentCategorie) {
+      case 'livres':
+        $parent_id = 1;
+        break;
+      case 'manga':
+        $parent_id = 2;
+        break;
+      case 'bd':
+        $parent_id = 3;
+        break;
+      default:
+        $parent_id = 1;
+        break;
+    }
+
+    $query = "
+        SELECT *
+        FROM book 
+        JOIN type ON book.type_id = type.id 
+        JOIN author ON author_id = author.id
+        WHERE type.parent_id = :parent_id
+        ";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(':parent_id', $parent_id, $this->pdo::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
+  }
+
+  public function getBooksByType(string $categorie): array
   {
     $query = "
         SELECT *
         FROM book 
         JOIN type ON book.type_id = type.id 
         JOIN author ON author_id = author.id
-        WHERE type.parent_id = 1
+        WHERE type.name = :categorie
         ";
         $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(':categorie', $categorie, $this->pdo::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
   }
