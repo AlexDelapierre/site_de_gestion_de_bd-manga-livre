@@ -30,22 +30,22 @@ class BookRepository
     return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
   }
 
-  public function getBooksByParentType(): array
+  public function getBooksByType(): array
   {
-    $parentCategorie = $_GET['action'];
+    $type = $_GET['action'];
 
-    switch ($parentCategorie) {
+    switch ($type) {
       case 'livres':
-        $parent_id = 1;
+        $type_id = 1;
         break;
       case 'manga':
-        $parent_id = 2;
+        $type_id = 2;
         break;
       case 'bd':
-        $parent_id = 3;
+        $type_id = 3;
         break;
       default:
-        $parent_id = 1;
+        $type_id = 1;
         break;
     }
 
@@ -53,26 +53,30 @@ class BookRepository
         SELECT *
         FROM book 
         JOIN type ON book.type_id = type.id 
+        JOIN category ON book.category_id = category.id 
         JOIN author ON author_id = author.id
-        WHERE type.parent_id = :parent_id
+        WHERE type_id = :type
         ";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue(':parent_id', $parent_id, $this->pdo::PARAM_INT);
+        $stmt->bindValue(':type', $type_id, $this->pdo::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
   }
 
-  public function getBooksByType(string $categorie): array
+  public function getBooksByCategory(string $type,string $categorie): array
   {
     $query = "
         SELECT *
         FROM book 
         JOIN type ON book.type_id = type.id 
-        JOIN author ON author_id = author.id
-        WHERE type.name = :categorie
+        JOIN category ON book.category_id = category.id 
+        JOIN author ON book.author_id = author.id
+        WHERE type.name = :type
+        AND category.name = :categorie
         ";
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue(':categorie', $categorie, $this->pdo::PARAM_INT);
+        $stmt->bindValue(':type', $type, $this->pdo::PARAM_STR);
+        $stmt->bindValue(':categorie', $categorie, $this->pdo::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
   }

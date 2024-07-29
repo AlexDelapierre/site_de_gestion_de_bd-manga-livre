@@ -1,4 +1,6 @@
 <?php 
+  // Type des livres
+  $type = $_GET['action'];
   // Tableau pour stocker les différentes catégories de livres
   $categories = array();
 
@@ -6,7 +8,12 @@
   foreach ($books as $book) {
     if (isset($book['name']) && !in_array($book['name'], $categories)) {
       // Ajouter la catégorie au tableau $categories si elle n'existe pas déjà
-      $categories[] = $book['name'];
+      $categories['categories'] = $book['name'];
+    }
+  
+    if (isset($book['type_id']) && !in_array($book['type_id'], $categories)) {
+      // Ajouter la catégorie au tableau $categories si elle n'existe pas déjà
+      $categories['type'] = $book['type_id'];
     }
   }
 ?>
@@ -15,7 +22,7 @@
 foreach ($categories as $categorie) {?>
 
   <div class="container text-center my-3">
-  <a href="index.php?controller=book&action=list&categorie=<?php echo urlencode($categorie); ?>">
+  <a href="index.php?controller=book&action=list&type=<?php echo urlencode($type); ?>&categorie=<?php echo urlencode($categorie); ?>">
     <h2 class="font-weight-light"><?php echo htmlspecialchars($categorie); ?> </h2>
   </a>
     <div class="row mx-auto my-auto">

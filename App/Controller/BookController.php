@@ -50,6 +50,13 @@ Class BookController extends Controller
   protected function index()
   {
     $template = 'book/index.php'; 
+    if (isset($_GET['type'])) {
+      $type = htmlspecialchars($_GET['type']); // Récupère et échappe la variable pour éviter les injections XSS
+    } else {
+      // Gérer le cas où la variable n'est pas définie
+      $type = 'default'; // ou toute autre valeur par défaut
+  }
+
     if (isset($_GET['categorie'])) {
       $categorie = htmlspecialchars($_GET['categorie']); // Récupère et échappe la variable pour éviter les injections XSS
     } else {
@@ -57,7 +64,11 @@ Class BookController extends Controller
         $categorie = 'default'; // ou toute autre valeur par défaut
     }
 
-    $books = $this->bookRepository->getBooksByType($categorie);
+    $books = $this->bookRepository->getBooksByCategory($type, $categorie);
+
+    echo '<pre>';
+     var_dump($books);
+    echo '</pre>';
 
     $this->render('base', [
       'template' => $template,

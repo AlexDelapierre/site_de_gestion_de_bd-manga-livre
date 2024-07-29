@@ -18,7 +18,7 @@ Class PageController extends Controller
           case 'home':
             $this->home();  
             break;
-          case 'livres':
+          case 'livre':
             $this->books();
             break;
           case 'bd':
@@ -88,11 +88,11 @@ Class PageController extends Controller
   {
     $template = 'page/books.php'; 
     $bookRepository = new BookRepository;
-    $books = $bookRepository->getBooksByParentType();
+    $books = $bookRepository->getBooksByType();
 
-    // echo '<pre>';
-    // var_dump($books);
-    // echo '</pre>';
+     echo '<pre>';
+     var_dump($books);
+     echo '</pre>';
 
     /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
     $this->render('base', [

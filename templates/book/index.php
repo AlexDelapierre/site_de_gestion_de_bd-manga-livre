@@ -1,5 +1,5 @@
 <div class="row text-center">
-  <?php foreach ($books['data'] as $key => $book) {
+  <?php foreach ($books as $key => $book) {
     include('templates/_partials/book_partial.php');
   } ?>
 </div>
