@@ -9,6 +9,7 @@ class Book
   protected string $description;
   protected string $image;
   protected int $type_id;
+  protected int $category_id;
   protected int $author_id; 
 
   /**
@@ -102,6 +103,24 @@ class Book
   }
 
   /**
+   * Get the value of category_id
+   */
+  public function getCategoryId(): int
+  {
+    return $this->category_id;
+  }
+
+  /**
+   * Set the value of category_id
+   */
+  public function setCategoryId(int $category_id): self
+  {
+    $this->category_id = $category_id;
+
+    return $this;
+  }
+
+  /**
    * Get the value of author_id
    */
   public function getAuthorId(): int
@@ -118,4 +137,6 @@ class Book
 
     return $this;
   }
+
+  
 }

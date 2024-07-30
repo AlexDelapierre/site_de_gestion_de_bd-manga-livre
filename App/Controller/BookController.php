@@ -64,7 +64,7 @@ Class BookController extends Controller
         $categorie = 'default'; // ou toute autre valeur par défaut
     }
 
-    $books = $this->bookRepository->getBooksByCategory($type, $categorie);
+    $books = $this->bookRepository->getBooksByCategory($type, $categorie, 6, 0);
 
     echo '<pre>';
      var_dump($books);

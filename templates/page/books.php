@@ -8,12 +8,7 @@
   foreach ($books as $book) {
     if (isset($book['name']) && !in_array($book['name'], $categories)) {
       // Ajouter la catégorie au tableau $categories si elle n'existe pas déjà
-      $categories['categories'] = $book['name'];
-    }
-  
-    if (isset($book['type_id']) && !in_array($book['type_id'], $categories)) {
-      // Ajouter la catégorie au tableau $categories si elle n'existe pas déjà
-      $categories['type'] = $book['type_id'];
+      $categories[] = $book['name'];
     }
   }
 ?>

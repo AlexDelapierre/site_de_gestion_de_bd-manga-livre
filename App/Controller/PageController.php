@@ -51,7 +51,8 @@ Class PageController extends Controller
     $template = 'page/home.php'; 
     $bookRepository = new BookRepository;
     $bookPaginationService = new BookPaginationService($bookRepository);
-    $books = $bookPaginationService->findBooksPaginated(6);
+    // $books = $bookPaginationService->findBooksPaginated(6);
+    $books = $bookRepository->findAllWithLimit(6);
 
     // echo '<pre>';
     //     var_dump($books);

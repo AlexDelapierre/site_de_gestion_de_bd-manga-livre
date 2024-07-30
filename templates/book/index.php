@@ -4,4 +4,4 @@
   } ?>
 </div>
 
-<?php include_once('templates/_partials/_pagination.php') ?>
+<!-- <?php include_once('templates/_partials/_pagination.php') ?> -->
