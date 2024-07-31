@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-class Category
+class Author
 {
   protected ?int $id = null;
   protected string $last_name;
