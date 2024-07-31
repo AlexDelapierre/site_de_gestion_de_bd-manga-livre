@@ -1,17 +1,17 @@
 <?php 
-  // Type des livres
-  $type = $_GET['action'];
-  // Tableau pour stocker les différentes catégories de livres
-  $categories = array();
+  // // Type des livres
+  // $type = $_GET['action'];
+  // // Tableau pour stocker les différentes catégories de livres
+  // $categories = array();
 
-  // Parcourir le tableau des livres
-  foreach ($books as $book) {
-    $category = $book->getCategory();
-    if (isset($category) && !in_array($category->getName(), $categories)) {
-      // Ajouter la catégorie au tableau $categories si elle n'existe pas déjà
-      $categories[] = $category->getName();
-    }
-  }
+  // // Parcourir le tableau des livres
+  // foreach ($books as $book) {
+  //   $category = $book->getCategory();
+  //   if (isset($category) && !in_array($category->getName(), $categories)) {
+  //     // Ajouter la catégorie au tableau $categories si elle n'existe pas déjà
+  //     $categories[] = $category->getName();
+  //   }
+  // }
 ?>
 
 <?php 
@@ -30,7 +30,7 @@ foreach ($categories as $categorie) {?>
               <div class="carousel-item active">
                 <div class="col-md-4">
                   <div class="card card-body">
-                    <img class="img-fluid" src="uploads/books/<?php echo $book->getImage() ?> ">
+                    <img class="img-fluid" src="upload/books/<?php echo $book->getImage() ?> ">
                   </div>
                 </div>
               </div> 

@@ -7,15 +7,15 @@
   </div>
 
   <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-    <li><a href="index.php?controller=page&action=home" class="nav-link px-2 link-secondary">Home</a></li>
+    <li><a href="index.php?controller=page&action=accueil" class="nav-link px-2 link-secondary">Accueil</a></li>
     <!-- <li><a href="index.php?controller=page&action=about" class="nav-link px-2">About</a></li> -->
     <li><a href="index.php?controller=page&action=livre" class="nav-link px-2 link-secondary">Livres</a></li>
-    <li><a href="index.php?controller=page&action=bd" class="nav-link px-2 link-secondary">BD</a></li>
+    <li><a href="index.php?controller=page&action=BD" class="nav-link px-2 link-secondary">BD</a></li>
     <li><a href="index.php?controller=page&action=manga" class="nav-link px-2 link-secondary">Manga</a></li>
   </ul>
 
   <div class="col-md-3 text-end">
-    <button type="button" class="btn btn-outline-primary me-2">Login</button>
-    <button type="button" class="btn btn-primary">Sign-up</button>
+    <!-- <button type="button" class="btn btn-outline-primary me-2">Login</button>
+    <button type="button" class="btn btn-primary">Sign-up</button> -->
   </div>
 </header>

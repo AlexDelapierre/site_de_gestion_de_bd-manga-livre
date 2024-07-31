@@ -15,13 +15,13 @@ Class PageController extends Controller
           case 'about':
             $this->about();
             break;
-          case 'home':
+          case 'accueil':
             $this->home();  
             break;
           case 'livre':
             $this->books();
             break;
-          case 'bd':
+          case 'BD':
             $this->books();  
             break;
           case 'manga':
@@ -51,11 +51,10 @@ Class PageController extends Controller
     $template = 'page/home.php'; 
     $bookRepository = new BookRepository;
     $bookPaginationService = new BookPaginationService($bookRepository);
-    // $books = $bookPaginationService->findBooksPaginated(6);
-    $books = $bookRepository->findAllWithLimit(6);
+    $books = $bookRepository->findAll();
 
     // echo '<pre>';
-    //     var_dump($books);
+    // var_dump($books);
     // echo '</pre>';
         
     $this->render('base', [
@@ -89,16 +88,39 @@ Class PageController extends Controller
   {
     $template = 'page/books.php'; 
     $bookRepository = new BookRepository;
-    $books = $bookRepository->getBooksByType();
+    // $books = $bookRepository->getBooksByType();
+    $books = $bookRepository->findAll();
 
-     echo '<pre>';
-     var_dump($books);
-     echo '</pre>';
+    // Type des livres
+    $type = $_GET['action'];
+
+    // Tableau qui va contenir les livres suivant le type récupéré par $_GET
+    $booksByType = array();
+
+    foreach ($books as $book) {
+      if ($book->getType()->getName() == $type) {
+        $booksByType[] = $book;
+      }
+    }
+
+    // Tableau pour stocker les différentes catégories de livres
+    $categories = array();
+
+    // Parcourir le tableau des livres
+    foreach ($booksByType as $bookByType) {
+      $category = $bookByType->getCategory();
+      if (isset($category) && !in_array($category->getName(), $categories)) {
+        // Ajouter la catégorie au tableau $categories si elle n'existe pas déjà
+        $categories[] = $category->getName();
+      }
+    }
 
     /* on passe en premier paramètre la page à charger et en 2ème un tableau associatif de paramètres*/
     $this->render('base', [
       'template' => $template,
-      'books' => $books
+      'type' => $type,
+      'categories' => $categories,
+      'books' => $booksByType
     ]);
   }   
 }

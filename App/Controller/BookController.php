@@ -50,13 +50,16 @@ Class BookController extends Controller
   protected function index()
   {
     $template = 'book/index.php'; 
+
+    // On récupère le type s'il est passé dans l'URL
     if (isset($_GET['type'])) {
       $type = htmlspecialchars($_GET['type']); // Récupère et échappe la variable pour éviter les injections XSS
     } else {
       // Gérer le cas où la variable n'est pas définie
       $type = 'default'; // ou toute autre valeur par défaut
-  }
+    }
 
+    // On récupère la catégorie si elle est passée dans l'URL
     if (isset($_GET['categorie'])) {
       $categorie = htmlspecialchars($_GET['categorie']); // Récupère et échappe la variable pour éviter les injections XSS
     } else {
@@ -64,15 +67,25 @@ Class BookController extends Controller
         $categorie = 'default'; // ou toute autre valeur par défaut
     }
 
-    $books = $this->bookRepository->getBooksByCategory($type, $categorie, 6, 0);
+    //On récupère tous les livres en BDD
+    $books = $this->bookRepository->findAll();
 
-    echo '<pre>';
-     var_dump($books);
-    echo '</pre>';
+    // Tableau qui va contenir les livres filtrés suivant le type et la catégorie récupéré par $_GET
+    $booksByTypeAndCategory = array();
+    
+    foreach ($books as $book) {
+      if ($book->getType()->getName() == $type && $book->getCategory()->getName() == $categorie) {
+        $booksByTypeAndCategory[] = $book;
+      }
+    }
+
+    // echo '<pre>';
+    //  var_dump($booksByTypeAndCategory);
+    // echo '</pre>';
 
     $this->render('base', [
       'template' => $template,
-      'books' => $books
+      'books' => $booksByTypeAndCategory
     ]);
   }
 
@@ -82,6 +95,8 @@ Class BookController extends Controller
   */
   protected function show()
   {
+    $template = 'book/show.php'; 
+
     try {
       if (isset($_GET['id'])) {
 
@@ -90,7 +105,12 @@ Class BookController extends Controller
         // $bookRepository = new BookRepository;
         $book = $this->bookRepository->findOneById($id); 
 
-        $this->render('book/show', [
+        // echo '<pre>';
+        //   var_dump($book);
+        // echo '</pre>';
+
+        $this->render('base', [
+          'template' => $template,
           'title' => $book->getTitle(),
           'description' => $book->getDescription(),
           'image' => $book->getImage()

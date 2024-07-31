@@ -20,16 +20,54 @@ class BookRepository
     $this->pdo = $this->mysql->getPDO(); 
   }
 
+  // public function findAll(): array
+  // {
+  //   $query = "
+  //       SELECT *
+  //       FROM book 
+  //       JOIN type ON book.type_id = type.id
+  //   ";
+  //   $stmt = $this->pdo->prepare($query);
+  //   $stmt->execute();
+  //   return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
+  // }
+
+  // Version avec tableau d'objet
   public function findAll(): array
   {
-    $query = "
-        SELECT *
-        FROM book 
-        JOIN type ON book.type_id = type.id
-    ";
-    $stmt = $this->pdo->prepare($query);
-    $stmt->execute();
-    return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
+    $query = $this->pdo->prepare('SELECT * FROM book');    
+    $query->execute();
+    $booksData = $query->fetchAll($this->pdo::FETCH_ASSOC);
+    $books = [];
+
+    foreach ($booksData as $bookData) {
+      $bookEntity = new Book();
+      // On passe les valeurs avec les setteurs
+      $bookEntity->setId($bookData['id']);
+      $bookEntity->setTitle($bookData['title']);
+      $bookEntity->setDescription($bookData['description']);
+      $bookEntity->setImage($bookData['image']);
+      $bookEntity->setTypeId($bookData['type_id']);
+      $bookEntity->setCategoryId($bookData['category_id']);
+      $bookEntity->setAuthorId($bookData['author_id']);
+
+      // On Charge l'objet Type
+      $typeRepository = new TypeRepository();
+      $type = $typeRepository->getTypeById($bookData['type_id']);
+      $bookEntity->setType($type);
+      // On Charge l'objet Category
+      $categoryRepository = new CategoryRepository();
+      $category = $categoryRepository->getCategoryById($bookData['category_id']);
+      $bookEntity->setCategory($category);
+      // On Charge l'objet Author
+      $authorRepository = new AuthorRepository();
+      $author = $authorRepository->getAuthorById($bookData['author_id']);
+      $bookEntity->setAuthor($author);
+
+      $books[] = $bookEntity;
+    }
+    
+    return $books;
   }
 
   public function findAllWithLimit(int $limit): array
@@ -140,29 +178,7 @@ class BookRepository
     return $books;
   }
 
-  public function getBooksByCategory(string $type,string $categorie, int $limit, int $offset): array
-  {
-    $query = "
-        SELECT *
-        FROM book 
-        JOIN type ON book.type_id = type.id 
-        JOIN category ON book.category_id = category.id 
-        JOIN author ON book.author_id = author.id
-        WHERE type.name = :type
-        AND category.name = :categorie
-        LIMIT :limit OFFSET :offset
-        ";
-    $stmt = $this->pdo->prepare($query);
-    $stmt->bindValue(':type', $type, $this->pdo::PARAM_STR);
-    $stmt->bindValue(':categorie', $categorie, $this->pdo::PARAM_STR);
-    $stmt->bindValue(':limit', $limit, $this->pdo::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, $this->pdo::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
-  }
-
-  // Version avec tableau d'objet
-  // public function getBooksByCategory(string $type,string $categorie): array
+  // public function getBooksByCategory(string $type,string $categorie, int $limit, int $offset): array
   // {
   //   $query = "
   //       SELECT *
@@ -172,30 +188,49 @@ class BookRepository
   //       JOIN author ON book.author_id = author.id
   //       WHERE type.name = :type
   //       AND category.name = :categorie
+  //       LIMIT :limit OFFSET :offset
   //       ";
   //   $stmt = $this->pdo->prepare($query);
   //   $stmt->bindValue(':type', $type, $this->pdo::PARAM_STR);
   //   $stmt->bindValue(':categorie', $categorie, $this->pdo::PARAM_STR);
+  //   $stmt->bindValue(':limit', $limit, $this->pdo::PARAM_INT);
+  //   $stmt->bindValue(':offset', $offset, $this->pdo::PARAM_INT);
   //   $stmt->execute();
-  //   $booksData = $stmt->fetchAll($this->pdo::FETCH_ASSOC);
-  //   $books = [];
-
-  //   foreach ($booksData as $bookData) {
-  //     $bookEntity = new Book();
-  //     // On passe les valeurs avec les setteurs
-  //     $bookEntity->setId($bookData['id']);
-  //     $bookEntity->setTitle($bookData['title']);
-  //     $bookEntity->setDescription($bookData['description']);
-  //     $bookEntity->setImage($bookData['image']);
-  //     $bookEntity->setTypeId($bookData['type_id']);
-  //     $bookEntity->setCategoryId($bookData['category_id']);
-  //     $bookEntity->setAuthorId($bookData['author_id']);
-
-  //     $books[] = $bookEntity;
-  //   }
-    
-  //   return $books;
+  //   return $stmt->fetchAll($this->pdo::FETCH_ASSOC);
   // }
+
+  // Version avec tableau d'objet
+  public function getBooksByCategory(string $type,string $categorie): array
+  {
+    $query = "
+        SELECT *
+        FROM book 
+        WHERE type.name = :type
+        AND category.name = :categorie
+        ";
+    $stmt = $this->pdo->prepare($query);
+    $stmt->bindValue(':type', $type, $this->pdo::PARAM_STR);
+    $stmt->bindValue(':categorie', $categorie, $this->pdo::PARAM_STR);
+    $stmt->execute();
+    $booksData = $stmt->fetchAll($this->pdo::FETCH_ASSOC);
+    $books = [];
+
+    foreach ($booksData as $bookData) {
+      $bookEntity = new Book();
+      // On passe les valeurs avec les setteurs
+      $bookEntity->setId($bookData['id']);
+      $bookEntity->setTitle($bookData['title']);
+      $bookEntity->setDescription($bookData['description']);
+      $bookEntity->setImage($bookData['image']);
+      $bookEntity->setTypeId($bookData['type_id']);
+      $bookEntity->setCategoryId($bookData['category_id']);
+      $bookEntity->setAuthorId($bookData['author_id']);
+
+      $books[] = $bookEntity;
+    }
+    
+    return $books;
+  }
 
   // Requête pour la pagination
   public function getBooks(int $limit, int $offset): array 
