@@ -6,9 +6,10 @@
 
   // Parcourir le tableau des livres
   foreach ($books as $book) {
-    if (isset($book['name']) && !in_array($book['name'], $categories)) {
+    $category = $book->getCategory();
+    if (isset($category) && !in_array($category->getName(), $categories)) {
       // Ajouter la catégorie au tableau $categories si elle n'existe pas déjà
-      $categories[] = $book['name'];
+      $categories[] = $category->getName();
     }
   }
 ?>
@@ -25,11 +26,11 @@ foreach ($categories as $categorie) {?>
         <div class="carousel-inner w-100" role="listbox">
           
           <?php foreach ($books as $book) {
-            if ($book['name'] === $categorie) { ?>
+            if ($book->getCategory()->getName() === $categorie) { ?>
               <div class="carousel-item active">
                 <div class="col-md-4">
                   <div class="card card-body">
-                    <img class="img-fluid" src="uploads/books/<?php echo $book['image'] ?> ">
+                    <img class="img-fluid" src="uploads/books/<?php echo $book->getImage() ?> ">
                   </div>
                 </div>
               </div> 

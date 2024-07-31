@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Book;
 use App\Db\Mysql;
+use App\Entity\Author;
+use App\Entity\Category;
 use App\Tools\StringTools;
 
 class BookRepository
@@ -100,9 +102,6 @@ class BookRepository
     $query = "
         SELECT *
         FROM book 
-        JOIN type ON book.type_id = type.id 
-        JOIN category ON book.category_id = category.id 
-        JOIN author ON author_id = author.id
         WHERE type_id = :type
         ";
     $stmt = $this->pdo->prepare($query);
@@ -121,6 +120,19 @@ class BookRepository
       $bookEntity->setTypeId($bookData['type_id']);
       $bookEntity->setCategoryId($bookData['category_id']);
       $bookEntity->setAuthorId($bookData['author_id']);
+
+      // On Charge l'objet Type
+      $typeRepository = new TypeRepository();
+      $type = $typeRepository->getTypeById($bookData['type_id']);
+      $bookEntity->setType($type);
+      // On Charge l'objet Category
+      $categoryRepository = new CategoryRepository();
+      $category = $categoryRepository->getCategoryById($bookData['category_id']);
+      $bookEntity->setCategory($category);
+      // On Charge l'objet Author
+      $authorRepository = new AuthorRepository();
+      $author = $authorRepository->getAuthorById($bookData['author_id']);
+      $bookEntity->setAuthor($author);
 
       $books[] = $bookEntity;
     }

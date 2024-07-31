@@ -11,6 +11,9 @@ class Book
   protected int $type_id;
   protected int $category_id;
   protected int $author_id; 
+  protected ?type $type = null; 
+  protected ?Category $category = null; 
+  protected ?Author $author = null; 
 
   /**
    * Get the value of id
@@ -138,5 +141,57 @@ class Book
     return $this;
   }
 
-  
+  /**
+   * Get the value of type
+   */
+  public function getType(): ?type
+  {
+    return $this->type;
+  }
+
+  /**
+   * Set the value of type
+   */
+  public function setType(?type $type): self
+  {
+    $this->type = $type;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of category
+   */
+  public function getCategory(): ?Category
+  {
+    return $this->category;
+  }
+
+  /**
+   * Set the value of category
+   */
+  public function setCategory(?Category $category): self
+  {
+    $this->category = $category;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of author
+   */
+  public function getAuthor(): ?Author
+  {
+    return $this->author;
+  }
+
+  /**
+   * Set the value of author
+   */
+  public function setAuthor(?Author $author): self
+  {
+    $this->author = $author;
+
+    return $this;
+  }
 }

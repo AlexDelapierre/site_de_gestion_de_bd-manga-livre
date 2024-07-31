@@ -8,7 +8,6 @@ class Category
   protected string $name;
   protected ?int $parent_id = null;
 
-
   /**
    * Get the value of id
    */
