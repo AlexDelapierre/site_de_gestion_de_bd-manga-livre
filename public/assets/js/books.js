@@ -65,5 +65,5 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Avancer automatiquement toutes les 10 secondes
-  setInterval(nextItem, 10000);
+  setInterval(nextItem, 1000);
 });

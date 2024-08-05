@@ -1,5 +1,6 @@
 <div class="row text-center">
   <?php foreach ($books as $key => $book) {
+    $id = $book->getId();
     include('templates/_partials/book_partial.php');
   } ?>
 </div>
