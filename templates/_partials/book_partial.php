@@ -1,3 +1,5 @@
+<?php $id = $book->getId(); ?>
+
 <div class="col-md-4 my-2 d-flex">
   <div class="card">
     <img src="upload/books/<?php echo $book->getImage(); ?>" class="card-img-top" alt="...">

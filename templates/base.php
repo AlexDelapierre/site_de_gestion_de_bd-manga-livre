@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="public/assets/css/style.css">
   <?php
     if ($template === 'page/books.php') {
-      echo '<link rel="stylesheet" href="public/assets/css/books.css">';
+      echo '<link rel="stylesheet" href="public/assets/css/carousel.css">';
     }
   ?>
 </head>
@@ -37,7 +37,7 @@
   </script>
   <?php
     if ($template === 'page/books.php') {
-        echo '<script src="public/assets/js/books.js"></script>';
+      echo '<script src="public/assets/js/books.js"></script>';
     }
   ?>
 </body>
