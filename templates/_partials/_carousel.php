@@ -1,4 +1,4 @@
-<div class="carousel-container">
+<div id="carousel-<?php echo uniqid(); ?>" class="carousel-container">
   <div class="inner-carousel">
     <div class="track">
 
@@ -15,8 +15,8 @@
       
     </div>
     <div class="nav">
-      <button class="prev"><i class="fas fa-arrow-left fa-2x"></i></button>
-      <button class="next"><i class="fas fa-arrow-right fa-2x"></i></button>
+      <button class="prev"><img src="public/assets/icons/PNG/back.png" alt=""></button>
+      <button class="next"><img src="public/assets/icons/PNG/next.png" alt=""></button>
     </div>
   </div>
 </div>

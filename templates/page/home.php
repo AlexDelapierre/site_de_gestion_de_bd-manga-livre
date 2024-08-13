@@ -15,7 +15,7 @@
 
 <div class="row text-center">
   <?php foreach ($books as $key => $book) {
-    include('templates/_partials/book_partial.php');
+    include('templates/_partials/_card.php');
   } ?>
 </div>
 

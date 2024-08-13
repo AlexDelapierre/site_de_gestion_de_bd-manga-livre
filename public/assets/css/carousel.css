@@ -33,7 +33,7 @@ img {
 }
 @media (max-width: 768px) {
   .card-container {
-    width: 184px;
+    width: 100%;
   }
 }
 .card {
@@ -72,4 +72,8 @@ img {
 }
 .nav .next.hide {
   display: none;
+}
+
+.display {
+  filter: invert(63%) sepia(5%) saturate(400%) hue-rotate(100deg);
 }
