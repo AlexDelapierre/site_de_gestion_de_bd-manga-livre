@@ -37,7 +37,7 @@
   </script>
   <?php
     if ($template === 'page/books.php') {
-      echo '<script src="public/assets/js/books.js"></script>';
+      echo '<script src="public/assets/js/carousel.js"></script>';
     }
   ?>
 </body>

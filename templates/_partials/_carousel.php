@@ -4,13 +4,11 @@
 
       <?php foreach ($books as $book) { 
         if ($book->getCategory()->getName() === $categorie) { ?>
-        
         <div class="card-container">
           <div class="card">
             <img class="img-fluid" src="upload/books/<?php echo $book->getImage() ?>" alt="<?php echo $book->getImage() ?>">
           </div>
         </div>
-
       <?php }} ?>  
       
     </div>
